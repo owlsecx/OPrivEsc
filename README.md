@@ -18,22 +18,18 @@
 
 ## 📌 Overview
 
-Local privilege-escalation enumerator (audit only — LinPEAS-style)
+OPrivEsc is a local privilege-escalation enumerator for Linux. It reads local configuration — SUID/SGID binaries, sudo rights, writable sensitive paths, cron and systemd timers, processes and mounts — and reports findings with a score. It never attempts escalation, runs no exploits and makes no system changes.
 
 ---
 
 ## ✨ Features
 
-- System info — kernel + offline CVE version-range hints, OS release, sudo version notes, PATH analysis
-- SUID/SGID inventory with embedded GTFOBins-like cross-reference (~80 binaries) + getcap capabilities
-- Sudo rights — sudo -l (timeout) / sudoers parse; NOPASSWD, abusable binaries, env_keep
-- Writable sensitive files — passwd/shadow/crontab/ systemd/init/PATH dirs; world-writable service paths
-- Cron & systemd timers — writable script detection
-- Credentials hunt — locations only, values masked
-- Processes & sockets — root procs with writable bins
-- NFS/mounts — no_root_squash, fstab nosuid, docker
-- Score + report TXT/MD/JSON/CSV; save chooser; clipboard; interactive menu; ~/OPrivEsc/config.json
-- Full CLI — --all --suid --sudo --cron --creds --writable --json -o --fail-on --version --help
+- System enumeration with kernel/OS version, offline CVE hints and PATH analysis
+- SUID/SGID inventory cross-referenced against a GTFOBins-like dataset plus capabilities
+- Sudo rights analysis (sudo -l / sudoers) for NOPASSWD and abusable binaries
+- Writable sensitive files, cron jobs and systemd timers detection
+- Credentials hunt (locations only, values masked) and root-process/socket review
+- NFS/mount checks, scoring and TXT/MD/JSON/CSV reporting with a CI fail-on gate
 
 ---
 
@@ -47,7 +43,10 @@ Local privilege-escalation enumerator (audit only — LinPEAS-style)
 ## 🚀 Usage
 
 ```bash
-./OPrivEsc
+./OPrivEsc --all
+./OPrivEsc --suid --sudo --cron
+./OPrivEsc --all --format json -o report.json
+./OPrivEsc --help
 ```
 
 ---
